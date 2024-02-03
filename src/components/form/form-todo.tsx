@@ -54,7 +54,6 @@ const Form = () => {
     try {
       await deleteDoc(doc(db, 'todos', todoId));
   
-      // Actualizar la lista de tareas
       setTodos((prevTodos) => prevTodos.filter((tarea) => tarea.id !== todoId));
     } catch (error: any) {
       console.error('Error al eliminar documento:', error);
@@ -65,14 +64,12 @@ const Form = () => {
     try {
       await updateDoc(doc(db, 'todos', task.id), { todo: task.todo, completed: task.completed });
   
-      // Actualizar la lista de tareas
       setTodos((prevTodos) =>
         prevTodos.map((t) =>
           t.id === task.id ? { ...t, todo: task.todo, completed: task.completed } : t
         )
       );
   
-      // Limpiar el estado de edición
       setEditingTask(null);
       setTodo('');
     } catch (error: any) {
@@ -104,7 +101,7 @@ const Form = () => {
     const fetchTodos = async () => {
       try {
         const querySnapshot = await getDocs(collection(db, 'todos'));
-        const data = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        const data = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data()} as Todo));
         setTodos(data);
       } catch (error: any) {
         console.error('Error al obtener Todos:', error);
@@ -136,7 +133,6 @@ const Form = () => {
           onSubmit={handleSubmit}
           className="bg-white py-10 px-5 md:w-1/2 rounded-lg shadow mt-5"
         >
-          {/* Resto del formulario aquí */}
           <input
             type="number"
             className="border w-full p-2 mt-2 placeholder-gray-400 rounded-md"
@@ -159,7 +155,6 @@ const Form = () => {
         </form>
       )}
       
-      {/* Mostrar lista de tareas */}
       <ul>
         {todos.map((tarea) => (
           <li key={tarea.id}>
