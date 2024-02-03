@@ -1,18 +1,13 @@
 import React from 'react';
 import CardTodo from '../card-todo/card-todos';
 
-
-interface CardsTodosProps {
-  todos: Array<{
-    id: number;
-    todo: string;
-    completed: boolean;
-    userId: number;
-    // Otras propiedades según sea necesario
-  }>;
+interface Tarea {
+  id: string;
+  todo: string;
+  completed: boolean;
 }
 
-const CardsTodos: React.FC<CardsTodosProps> = ({ todos }) => {
+const CardsTodos: React.FC<{ todos: Tarea[] }> = ({ todos }) => {
   return (
     <div>
       <div className='flex flex-wrap gap-2'>
