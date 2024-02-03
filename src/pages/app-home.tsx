@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import CardsTodos from '@/components/cards-todos/cards-todos';
 import Form from '@/components/form/form-todo';
+import Header from '@/components/header/header';
 import firebaseConfig from '../../firebase/config';
 import { initializeFirebase, getAllTodos } from '../../firebase/firebase';
 
@@ -41,6 +42,10 @@ const AppHome = () => {
 
   return (
     <>
+      <div>
+          <Header/>
+      </div>
+
       <div>
         <CardsTodos todos={todos} />
       </div>

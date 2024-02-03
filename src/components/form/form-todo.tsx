@@ -50,23 +50,23 @@ const Form = () => {
     }
   };
   
-  const deleteTodoFromFirestore = async (todoId: string) => {
+  const deleteTodoFromFirestore = async (id: string) => {
     try {
-      await deleteDoc(doc(db, 'todos', todoId));
+      await deleteDoc(doc(db, 'todos', id));
   
-      setTodos((prevTodos) => prevTodos.filter((tarea) => tarea.id !== todoId));
+      setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
     } catch (error: any) {
       console.error('Error al eliminar documento:', error);
     }
   };
   
-  const updateTodoInFirestore = async (task: Todo) => {
+  const updateTodoInFirestore = async (todo: Todo) => {
     try {
-      await updateDoc(doc(db, 'todos', task.id), { todo: task.todo, completed: task.completed });
+      await updateDoc(doc(db, 'todos', todo.id), { todo: todo.todo, completed: todo.completed });
   
       setTodos((prevTodos) =>
         prevTodos.map((t) =>
-          t.id === task.id ? { ...t, todo: task.todo, completed: task.completed } : t
+          t.id === todo.id ? { ...t, todo: todo.todo, completed: todo.completed } : t
         )
       );
   
@@ -82,8 +82,8 @@ const Form = () => {
     await addTodoForFirestore(id, todo);
   };
   
-  const handleDelete = async (todoId: string) => {
-    await deleteTodoFromFirestore(todoId);
+  const handleDelete = async (id: string) => {
+    await deleteTodoFromFirestore(id);
   };
   
   const handleEdit = (todo: Todo) => {
