@@ -7,7 +7,6 @@ interface Todo {
   completed: boolean;
 }
 
-
 interface FirebaseConfig extends FirebaseOptions {}
 
 export const initializeFirebase = (config: FirebaseConfig) => {
@@ -17,14 +16,15 @@ export const initializeFirebase = (config: FirebaseConfig) => {
 
 export const getAllTodos = async (db: any) => {
   try {
-    const querySnapshot = await getDocs(collection(db, 'todos')); // Cambiado a 'todos' según tu nueva especificación
-    const todos = querySnapshot.docs.map((doc): Todo => ({ id: doc.id, ...doc.data() }));
+    const querySnapshot = await getDocs(collection(db, 'todos'));
+    
+    // Especifica el tipo para doc.data() usando la interfaz Todo
+    const todos = querySnapshot.docs.map((doc): Todo => ({ id: doc.id, ...doc.data() } as Todo));
+    
     return todos;
   } catch (error) {
     console.error('Error al obtener todos:', error);
     return [];
   }
 };
-
-
 
