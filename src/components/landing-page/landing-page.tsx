@@ -1,5 +1,5 @@
 import Header from "./header/header"
-import Footer from "./footer/Footer"
+import Footer from "./footer/footer"
 
 const LandingPage = () => {
   return (
