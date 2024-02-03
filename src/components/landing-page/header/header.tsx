@@ -9,7 +9,7 @@ const Header = () => {
     const router = useRouter();
 
     const handleRedirect = () => {
-      // Redirige a la página '/otra-pagina'
+      // Redirige a la página home
       router.push('/app-home');
     };
   
@@ -21,24 +21,34 @@ const Header = () => {
                   <div className="header__barra">
                       <div className="header__logo">
                           <Image 
-                              src='/img/logo.svg'
+                              src='/img/logo-green.png'
                               alt="Logo"
                               width={200}
                               height={100}
                           />
-                          {/* <img src="/img/logo.svg" alt="logo nucleus"/> */}
+                      </div>
+
+                      <div>
+                    
+
                       </div>
 
                       <nav className="navegacion">
-                          <a href="#" className="navegacion__link">¿Qué es?</a>
-                          <a href="#" className="navegacion__link">¿Cómo Funciona?</a>
-                          <a href="#" className="navegacion__link">Registrate</a>
+                            <button className='navegacion__link'>
+                                <a href="#somos" className="">Somos</a>
+                            </button>
+                            <button className='navegacion__link'>                          
+                                <a href="#" className="">¿Cómo Funciona?</a>
+                            </button>
+                            <button className='navegacion__link'>   
+                                <a href="#" className="">Registrate</a>
+                            </button>                       
                       </nav>
                   </div>
 
                   <div className="header__grid">
                       <div className="header__texto">
-                          <h1 className="header__heading">Gestor de tareas</h1>
+                          <h2 className="header__heading">Gestor de Todos</h2>
                           <a onClick={handleRedirect} className="header__boton" href="#">Ingresar</a>
                       </div>
 

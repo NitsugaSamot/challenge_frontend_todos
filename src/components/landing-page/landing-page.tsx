@@ -1,40 +1,67 @@
-import Header from "./header/header"
-import Footer from "./footer/footer"
+import Header from "./header/header";
+import  {Cover}  from "./cover/cover";
+import Footer from "./footer/footer";
+import Image from "../../../node_modules/next/image";
 
 const LandingPage = () => {
   return (
     <>
-    <Header/>
-    <main className="nucleus">
-    <h2 className="nucleus__heading">¿Qué es?</h2>
-    <div className="nucleus__contenedor">
-        <div className="nucleus__grid">
-            <div className="nucleus__imagen">
-                <img src="/img/app_2.svg" alt="app nucleus"/>
+      <Header />
+      <main className="info">
+        <h3 className="info__heading">¿Cómo Funciona?</h3>
+        <div className="info__contenedor">
+          <div className="info__grid">
+            <div className="info__imagen">
+                <div className="div__image">
+                    <Image 
+                        src='/img/meet-two.jpg'
+                        alt="Logo"
+                        width={300}
+                        height={200}
+                    />             
+                </div>
+                <div className="div__image">
+                    <Image 
+                        src='/img/meet.jpg'
+                        alt="Logo"
+                        width={300}
+                        height={200}
+                    />
+                </div>
+                <div className="div__image">
+                    <Image 
+                        src='/img/meet-three.jpg'
+                        alt="Logo"
+                        width={300}
+                        height={200}
+                    />
+                </div>
+              {/* <img src="/img/app_2.svg" alt="app nucleus"/> */}
             </div>
 
             <div className="listado">
-                <div className="listado__elemento">
-                    <h2 className="listado__heading">Fácil</h2>
-                    <p className="listado__texto">Crea una cuenta, envía tu documentación y comienza a utilizar nucleus en un par de horas</p>
-                </div>
+              <div className="listado__elemento">
+                <h3 className="listado__heading">Fácil</h3>
+                <p className="listado__texto">Ingresa, accede a los usuarios y comienza a implementar las tareas necesarias</p>
+              </div>
 
-                <div className="listado__elemento">
-                    <h2 className="listado__heading">Seguro</h2>
-                    <p className="listado__texto">Por su tecnología digital nucleus es imposible de hackear o robar</p>
-                </div>
+              <div className="listado__elemento">
+                <h3 className="listado__heading">Seguro</h3>
+                <p className="listado__texto">Por su tecnología digital Todos es imposible de hackear o robar</p>
+              </div>
 
-                <div className="listado__elemento">
-                    <h2 className="listado__heading">Administrable</h2>
-                    <p className="listado__texto">Añade o transfiere fondos a tu banco, añade limites o controla tus gastos</p>
-                </div>
+              <div className="listado__elemento">
+                <h3 className="listado__heading">Administrable</h3>
+                <p className="listado__texto">Con una navegación sencilla e intuitiva lograras una gran performance en tu día a día</p>
+              </div>
             </div>                
+          </div>
         </div>
-    </div>
-    </main>
-    <Footer/>
-  </>
-  )
-}
+      </main>
+      <Cover/>
+      <Footer />
+    </>
+  );
+};
 
-export default LandingPage
+export default LandingPage;

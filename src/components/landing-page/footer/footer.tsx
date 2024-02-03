@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from '../../../../node_modules/next/image'
 
 const Footer = () => {
   return (
@@ -6,14 +7,21 @@ const Footer = () => {
         <div className="footer__contenedor">
             <div className="footer__grid">
                 <div className="footer__logo">
-                    <img src="/img/logo-blanco.svg" alt="logo blanco nucleus"/>
+                <Image 
+                    src='/img/logo-green.png'
+                    alt="Logo"
+                    width={200}
+                    height={100}
+                />
                 </div>
 
                 <nav className="navegacion">
-                    <a href="#" className="navegacion__link navegacion__link--blanco">¿Qué es?</a>
-                    <a href="#" className="navegacion__link navegacion__link--blanco">¿Cómo Funciona?</a>
-                    <a href="#" className="navegacion__link navegacion__link--blanco">Precios</a>
-                    <a href="#" className="navegacion__link navegacion__link--blanco">Contratar</a>
+                    <div className="copyright">
+                       <p>
+                       Todos los derechos reservados 2024 &copy;
+                       </p>
+                    </div>
+                       
                 </nav>
             </div>
         </div>

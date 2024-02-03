@@ -1,3 +1,4 @@
+import { Router } from "../../../node_modules/next/router"
 
 const Header = () => {
 
@@ -14,13 +15,13 @@ const Header = () => {
                     type="button"
                     className="font-bold"
                 >
-                    Buscar Todo
+                    Buscar todo
                 </button>
 
                 <button
                     className="font-bold"
                 >
-                    Todos
+                    All Todos
                 </button>     
 
                 <button

@@ -42,7 +42,19 @@ const AppHome = () => {
 
   return (
     <>
-      <div>
+      <div className='bg-gray-100'>
+          <Header />
+
+          <div className='md:flex md:min-h-screen '>
+              {/* <Sidebar /> */}
+              <Form />
+
+          <main className='p-10 flex-1 '>
+                <CardsTodos todos={todos} />
+          </main>
+          </div>
+      </div>
+      {/* <div>
           <Header/>
       </div>
 
@@ -52,7 +64,7 @@ const AppHome = () => {
 
       <div>
         <Form />
-      </div>
+      </div> */}
     </>
   );
 };

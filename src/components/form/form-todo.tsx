@@ -120,7 +120,7 @@ const Form = () => {
   }, [isEditing]);
 
   return (
-    <div>
+    <div className='px-5 py-10'>
       <button
         onClick={toggleForm}
         className="bg-lime-900 text-white p-3 uppercase font-bold rounded cursor-pointer hover:bg-lime-800 transition-colors"
