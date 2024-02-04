@@ -21,12 +21,30 @@ const NewTodo = () => {
       setIdUser(Number(query.userId));
       setId(query.id);
       setIsEditing(true);
-      // Verifica si query.todo es una cadena antes de establecer el estado
+  
+      // Verifica si query.todo es una cadena o una matriz de cadenas antes de establecer el estado
       if (typeof query.todo === 'string') {
         setTodo(query.todo);
+      } else if (Array.isArray(query.todo) && query.todo.length > 0) {
+        // Si es una matriz, toma el primer elemento
+        setTodo(query.todo[0]);
       }
     }
   }, [router.query]);
+  
+
+//   useEffect(() => {
+//     const { query } = router;
+//     if (query.id && query.userId) {
+//       setIdUser(Number(query.userId));
+//       setId(query.id);
+//       setIsEditing(true);
+//       // Verifica si query.todo es una cadena antes de establecer el estado
+//       if (typeof query.todo === 'string') {
+//         setTodo(query.todo);
+//       }
+//     }
+//   }, [router.query]);
   
 //   useEffect(() => {
 //     const { query } = router;
