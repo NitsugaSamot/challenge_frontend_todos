@@ -1,8 +1,9 @@
 import React from 'react';
 import CardTodo from '../card-todo/card-todos';
 
-interface Todo{
+interface Todo {
   id: string;
+  idUser: number;
   todo: string;
   completed: boolean;
 }

@@ -44,12 +44,6 @@ const CardTodo: React.FC<{ todo: Todo }> = ({ todo }) => {
     }
   };
 
-  // const handleEdit = () => {
-  //   router.push(`/new-todo?userId=${todo.idUser}&todo=${encodeURIComponent(todo.todo)}&completed=${todo.completed}`);
-  //   closeModal();
-  // };
-  
-
   const handleEdit = () => {
     router.push(`/new-todo?id=${todo.id}&userId=${todo.idUser}&todo=${encodeURIComponent(todo.todo)}&completed=${todo.completed}`);
     closeModal();
