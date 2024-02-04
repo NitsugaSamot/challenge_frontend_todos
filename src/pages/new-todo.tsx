@@ -19,7 +19,7 @@ const NewTodo = () => {
     const { query } = router;
     if (query.id && query.userId) {
       setIdUser(Number(query.userId));
-      setId(query.id);
+    //   setId(query.id);
       setIsEditing(true);
       setTodo(Array.isArray(query.todo) ? query.todo.join(', ') : query.todo || '');
     }
