@@ -1,23 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import{ useState, useEffect } from 'react';
 import CardsTodos from '@/components/cards-todos/cards-todos';
-import Form from '@/components/form/form-todo';
-import Header from '@/components/header/header';
 import firebaseConfig from '../../firebase/config';
 import { initializeFirebase, getAllTodos } from '../../firebase/firebase';
+import AppLayout from './app-layout';
 
 const db = initializeFirebase(firebaseConfig);
 
-// Importa la interfaz Tarea o define la interfaz aquí
-interface Tarea {
+interface Todo {
   id: string;
   todo: string;
   completed: boolean;
 }
 
-const AppHome = () => {
-  const [todos, setTodos] = useState<Tarea[]>([]); // Especifica el tipo como Tarea[]
+const Todos = () => {
 
-  useEffect(() => {
+const [todos, setTodos] = useState<Todo[]>([]); // Especifica el tipo como Tarea[]
+
+useEffect(() => {
     const fetchData = async () => {
       try {
         // Obtener datos de la API externa
@@ -41,32 +40,12 @@ const AppHome = () => {
   }, [db]);
 
   return (
-    <>
-      <div className='bg-gray-100'>
-          <Header />
+    <AppLayout>
+        <div>
+            <CardsTodos  todos={todos}/>
+        </div>
+    </AppLayout>
+  )
+}
 
-          <div className='md:flex md:min-h-screen '>
-              {/* <Sidebar /> */}
-              <Form />
-
-          <main className='p-10 flex-1 '>
-                <CardsTodos todos={todos} />
-          </main>
-          </div>
-      </div>
-      {/* <div>
-          <Header/>
-      </div>
-
-      <div>
-        <CardsTodos todos={todos} />
-      </div>
-
-      <div>
-        <Form />
-      </div> */}
-    </>
-  );
-};
-
-export default AppHome;
+export default Todos

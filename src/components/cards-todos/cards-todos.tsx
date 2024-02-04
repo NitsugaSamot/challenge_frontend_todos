@@ -1,13 +1,13 @@
 import React from 'react';
 import CardTodo from '../card-todo/card-todos';
 
-interface Tarea {
+interface Todo{
   id: string;
   todo: string;
   completed: boolean;
 }
 
-const CardsTodos: React.FC<{ todos: Tarea[] }> = ({ todos }) => {
+const CardsTodos: React.FC<{ todos: Todo[] }> = ({ todos }) => {
   return (
     <div>
       <div className='flex flex-wrap gap-2'>

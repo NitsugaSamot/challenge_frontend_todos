@@ -2,15 +2,13 @@ import React from 'react'
 import Image from '../../../../node_modules/next/image'
 import { useRouter } from 'next/router';
 
-// import './header-styles.css'
-
 const Header = () => {
 
     const router = useRouter();
 
     const handleRedirect = () => {
       // Redirige a la página home
-      router.push('/app-home');
+      router.push('/app-layout');
     };
   
 

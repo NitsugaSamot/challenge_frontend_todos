@@ -40,6 +40,11 @@ img {
   max-width: 100%;
   display: block;
 }
+
+li{
+  list-style: none;
+}
+
 [class$="__contenedor"] {
   max-width: 120rem;
   margin: 0 auto;
@@ -254,12 +259,12 @@ img {
 /* SECTION COVER*/
 
 #somos {
-  background-image: url(/img/learning.jpg);
+  background-image: url(/img/meet-two.jpg);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
   height: 100%;
-  opacity: 0.7; 
+  opacity: 0.9; 
 }
 
 @media all and (min-width: 600px) and (max-width: 1200px){

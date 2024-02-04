@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 
-interface Tarea {
+interface Todo {
   id: string;
   todo: string;
   completed: boolean;
 }
 
-const CardTodo: React.FC<{ todo: Tarea }> = ({ todo }) => {
+const CardTodo: React.FC<{ todo: Todo }> = ({ todo }) => {
   const [showDetails, setShowDetails] = useState(false);
 
   const toggleDetails = () => {
@@ -23,7 +23,6 @@ const CardTodo: React.FC<{ todo: Tarea }> = ({ todo }) => {
             <span className="">
               Todo: {todo.todo}<br />
               Completed: {todo.completed ? 'Yes' : 'No'}<br />
-              User ID: {todo.id}
             </span>
 
           </>
