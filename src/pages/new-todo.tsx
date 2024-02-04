@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import AppLayout from './app-layout';
 import { useRouter } from 'next/router';
-import { doc, collection, addDoc, updateDoc } from 'firebase/firestore';
+import { doc, collection, addDoc, updateDoc, getDocs, query, where  } from 'firebase/firestore';
 import { initializeFirebase } from '../../firebase/firebase';
 import firebaseConfig from '../../firebase/config';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 const db = initializeFirebase(firebaseConfig);
+
+interface TodoDocument {
+    id: string;
+    todo: string;
+    // Otros campos de la colección 'todos'
+  }
+  
 
 const NewTodo = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -52,23 +59,60 @@ const NewTodo = () => {
     }
   }, [router.query]);
 
+
+  const checkDocDuplicate = async (todo: string): Promise<TodoDocument[]> => {
+    const todosRef = collection(db, 'todos');
+    const q = query(todosRef, where('todo', '==', todo));
+    const querySnapshot = await getDocs(q);
+  
+    const existingTodos: TodoDocument[] = [];
+  
+    querySnapshot.forEach((doc) => {
+      existingTodos.push(doc.data() as TodoDocument);
+    });
+  
+    return existingTodos;
+  };
+
   const updateTodoInFirestore = async (id: string, todo: string) => {
-    const todoDocRef = doc(db, 'todos', id);
-    await updateDoc(todoDocRef, { todo });
-    console.log('Documento actualizado:', id);
-    formik.resetForm();
-    setIsEditing(false);
-    router.push(`/todos`);
+    try {
+      const existingTodos = await checkDocDuplicate(todo);
+  
+      if (existingTodos.length > 0) {
+        throw new Error('Ya existe un TODO con la misma descripción para cualquier usuario.');
+      }
+  
+      const todoDocRef = doc(db, 'todos', id);
+      await updateDoc(todoDocRef, { todo });
+      console.log('Documento actualizado:', id);
+      formik.resetForm();
+      setIsEditing(false);
+      router.push(`/todos`);
+    } catch (error) {
+      console.error('Error al actualizar documento:', error);
+    }
   };
-
+  
   const addTodoToFirestore = async (idUser: number, todo: string) => {
-    const docRef = await addDoc(collection(db, 'todos'), { idUser, todo, completed: false });
-    console.log('Documento agregado con ID:', docRef.id);
-    formik.resetForm();
-    setIsEditing(false);
-    router.push(`/todos`);
-  };
+    try {
+      const existingTodos = await checkDocDuplicate(todo);
+  
+      if (existingTodos.length > 0) {
+        throw new Error('Ya existe un TODO con la misma descripción para cualquier usuario.');
+      }
+  
+      const docRef = await addDoc(collection(db, 'todos'), { idUser, todo, completed: false });
+      console.log('Documento agregado con ID:', docRef.id);
+      formik.resetForm();
+      setIsEditing(false);
+      router.push(`/todos`);
+    } catch (error) {
+      console.error('Error al agregar documento:', error);
 
+    }
+  };
+  
+  
   return (
     <AppLayout>
       <form onSubmit={formik.handleSubmit} className="bg-white py-10 px-5 md:w-1/2 rounded-lg shadow mt-5 ">
