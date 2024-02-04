@@ -25,12 +25,13 @@ const NewTodo = () => {
     }),
 
     onSubmit: async (values) => {
-      try {
-        await addTodoForFirestore(values);
-      } catch (error) {
-        console.log(error);
-      }
-    },
+        try {
+          await addTodoForFirestore({ ...values, id: null });
+        } catch (error) {
+          console.log(error);
+        }
+      },
+      
   });
 
   useEffect(() => {
