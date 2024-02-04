@@ -19,7 +19,7 @@ const NewTodo = () => {
     const { query } = router;
     if (query.id && query.userId) {
       setIdUser(Number(query.userId));
-    //   setId(query.id);
+      setId(query.id);
       setIsEditing(true);
       setTodo(Array.isArray(query.todo) ? query.todo.join(', ') : query.todo || '');
     }
@@ -36,7 +36,7 @@ const NewTodo = () => {
     console.log('Documento agregado con ID:', docRef.id);
   };
 
-  const addTodoForFirestore = async ({ id, idUser, todo }: { id: string | null; idUser: number | null; todo: string }) => {
+  const addTodoForFirestore = async ({ id, idUser, todo }: { id: string ; idUser: number | null; todo: string }) => {
     try {
       if (idUser !== null) {
         if (isEditing) {
