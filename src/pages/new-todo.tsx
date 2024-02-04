@@ -76,12 +76,16 @@ const NewTodo = () => {
     console.log('Documento agregado con ID:', docRef.id);
   };
 
-  const addTodoForFirestore = async ({ id, idUser, todo }: { id: string ; idUser: number | null; todo: string }) => {
+  const addTodoForFirestore = async ({ id, idUser, todo }: { id: string | null; idUser: number | null; todo: string }) => {
     try {
       if (idUser !== null) {
         if (isEditing) {
-          // editar
-          await updateTodoInFirestore(id, todo);
+          if (id !== null) {
+            // editar
+            await updateTodoInFirestore(id, todo);
+          } else {
+            console.error('ID no válido');
+          }
         } else {
           // crear
           const todos = todo.split(',').map(t => t.trim());
@@ -90,9 +94,9 @@ const NewTodo = () => {
           }
         }
       } else {
-        console.error('ID no válido');
+        console.error('ID de usuario no válido');
       }
-
+  
       setIdUser(null);
       setTodo('');
       setIsEditing(false);
@@ -101,6 +105,32 @@ const NewTodo = () => {
       console.error('Error al agregar/actualizar documento:', error);
     }
   };
+  
+//   const addTodoForFirestore = async ({ id, idUser, todo }: { id: string ; idUser: number | null; todo: string }) => {
+//     try {
+//       if (idUser !== null) {
+//         if (isEditing) {
+//           // editar
+//           await updateTodoInFirestore(id, todo);
+//         } else {
+//           // crear
+//           const todos = todo.split(',').map(t => t.trim());
+//           for (const t of todos) {
+//             await addNewTodoToFirestore(idUser, t);
+//           }
+//         }
+//       } else {
+//         console.error('ID no válido');
+//       }
+
+//       setIdUser(null);
+//       setTodo('');
+//       setIsEditing(false);
+//       router.push(`/todos`);
+//     } catch (error: any) {
+//       console.error('Error al agregar/actualizar documento:', error);
+//     }
+//   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
