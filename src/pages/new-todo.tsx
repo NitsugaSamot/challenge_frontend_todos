@@ -16,8 +16,8 @@ const NewTodo = () => {
 
   const formik = useFormik({
     initialValues: {
-      idUser: null,
-      todo: '',
+        idUser: null as number | null, 
+        todo: '',
     },
     validationSchema: Yup.object({
       idUser: Yup.number().required('El campo ID no puede ir vacío ni debe tener carácteres especiales, debe ser un Número'),
