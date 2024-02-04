@@ -33,17 +33,28 @@ const NewTodo = () => {
       },
       
   });
-
   useEffect(() => {
     const { query } = router;
     if (query.id && query.userId) {
       formik.setValues({
         idUser: Number(query.userId),
-        todo: Array.isArray(query.todo) ? query.todo[0] : query.todo,
+        todo: Array.isArray(query.todo) ? query.todo[0] : query.todo?.toString() || '',
       });
       setIsEditing(true);
     }
   }, [router.query]);
+  
+
+//   useEffect(() => {
+//     const { query } = router;
+//     if (query.id && query.userId) {
+//       formik.setValues({
+//         idUser: Number(query.userId),
+//         todo: Array.isArray(query.todo) ? query.todo[0] : query.todo,
+//       });
+//       setIsEditing(true);
+//     }
+//   }, [router.query]);
 
   const updateTodoInFirestore = async (id: string, todo: string) => {
     const todoDocRef = doc(db, 'todos', id);
