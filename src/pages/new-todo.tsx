@@ -21,14 +21,29 @@ const NewTodo = () => {
       setIdUser(Number(query.userId));
       setId(query.id);
       setIsEditing(true);
-      
+  
       const todoValue = Array.isArray(query.todo) ? query.todo.join(', ') : (typeof query.todo === 'string' ? query.todo : '');
       
-      if (typeof todoValue === 'string') {
-        setTodo(todoValue);
-      }
+      const newTodo = todoValue instanceof Array ? todoValue[0] : todoValue;
+      
+      setTodo(newTodo);
     }
   }, [router.query]);
+  
+//   useEffect(() => {
+//     const { query } = router;
+//     if (query.id && query.userId) {
+//       setIdUser(Number(query.userId));
+//       setId(query.id);
+//       setIsEditing(true);
+      
+//       const todoValue = Array.isArray(query.todo) ? query.todo.join(', ') : (typeof query.todo === 'string' ? query.todo : '');
+      
+//       if (typeof todoValue === 'string') {
+//         setTodo(todoValue);
+//       }
+//     }
+//   }, [router.query]);
   
 
   const updateTodoInFirestore = async (id: string, todo: string) => {
