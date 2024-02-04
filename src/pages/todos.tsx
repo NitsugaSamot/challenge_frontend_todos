@@ -8,7 +8,7 @@ const db = initializeFirebase(firebaseConfig);
 
 interface Todo {
   id: string;
-  id_user: number;
+  idUser: number;
   todo: string;
   completed: boolean;
 }
