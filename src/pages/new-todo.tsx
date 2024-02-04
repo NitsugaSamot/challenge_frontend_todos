@@ -19,16 +19,34 @@ const NewTodo = () => {
     const { query } = router;
     if (query.id && query.userId) {
       setIdUser(Number(query.userId));
-      setId(query.id);
       setIsEditing(true);
-    
+  
       const todoValue = Array.isArray(query.todo) ? query.todo[0] : query.todo;
-      
+  
+      // Usamos una variable temporal para asegurarnos de que cumple con el tipo SetStateAction<string | null>
+      const newId = query.id;
+      setId(newId);
+  
       if (typeof todoValue === 'string') {
         setTodo(todoValue);
       }
     }
   }, [router.query]);
+  
+//   useEffect(() => {
+//     const { query } = router;
+//     if (query.id && query.userId) {
+//       setIdUser(Number(query.userId));
+//       setId(query.id);
+//       setIsEditing(true);
+    
+//       const todoValue = Array.isArray(query.todo) ? query.todo[0] : query.todo;
+      
+//       if (typeof todoValue === 'string') {
+//         setTodo(todoValue);
+//       }
+//     }
+//   }, [router.query]);
   
 //   useEffect(() => {
 //     const { query } = router;
