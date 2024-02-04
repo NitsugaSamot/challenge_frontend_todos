@@ -21,21 +21,9 @@ const NewTodo = () => {
       setIdUser(Number(query.userId));
       setId(query.id);
       setIsEditing(true);
-  
-      const todoValue = Array.isArray(query.todo) ? query.todo.join(', ') : (typeof query.todo === 'string' ? query.todo : '');
-      setTodo(() => todoValue);
+      setTodo(Array.isArray(query.todo) ? query.todo.join(', ') : (typeof query.todo === 'string' ? query.todo : ''));
     }
   }, [router.query]);
-  
-//   useEffect(() => {
-//     const { query } = router;
-//     if (query.id && query.userId) {
-//       setIdUser(Number(query.userId));
-//       setId(query.id);
-//       setIsEditing(true);
-//       setTodo(Array.isArray(query.todo) ? query.todo.join(', ') : (typeof query.todo === 'string' ? query.todo : ''));
-//     }
-//   }, [router.query]);
   
 //   useEffect(() => {
 //     const { query } = router;
