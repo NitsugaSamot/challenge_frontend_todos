@@ -25,12 +25,15 @@ const NewTodo = () => {
     }),
 
     onSubmit: async (values) => {
-      try {
-        await addTodoForFirestore(values);
-      } catch (error) {
-        console.log(error);
-      }
-    },
+        try {
+          // Añade la propiedad 'id' con el valor 'null' al objeto 'values'
+          await addTodoForFirestore({ ...values, id: null });
+        } catch (error) {
+          console.log(error);
+        }
+      },
+      
+
   });
 
   useEffect(() => {
