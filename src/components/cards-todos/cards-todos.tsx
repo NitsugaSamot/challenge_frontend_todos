@@ -3,7 +3,7 @@ import CardTodo from '../card-todo/card-todos';
 
 interface Todo {
   id: string;
-  idUser: number;
+  userId: number;
   todo: string;
   completed: boolean;
 }

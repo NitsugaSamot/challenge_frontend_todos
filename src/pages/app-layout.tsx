@@ -15,7 +15,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
         <div className='md:flex md:min-h-screen'>
           <Aside/>
 
-          <main className='p-10 flex-1'>
+          <main className='p-10 flex-1 '>
             {children}
           </main>
         </div>

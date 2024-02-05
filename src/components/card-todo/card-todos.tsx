@@ -10,7 +10,7 @@ const db = initializeFirebase(firebaseConfig);
 
 interface Todo {
   id: string;
-  idUser: number;
+  userId: number;
   todo: string;
   completed: boolean;
 }
@@ -45,7 +45,7 @@ const CardTodo: React.FC<{ todo: Todo }> = ({ todo }) => {
   };
 
   const handleEdit = () => {
-    router.push(`/new-todo?id=${todo.id}&userId=${todo.idUser}&todo=${encodeURIComponent(todo.todo)}&completed=${todo.completed}`);
+    router.push(`/new-todo?id=${todo.id}&userId=${todo.userId}&todo=${encodeURIComponent(todo.todo)}&completed=${todo.completed}`);
     closeModal();
   };
   
@@ -53,7 +53,7 @@ const CardTodo: React.FC<{ todo: Todo }> = ({ todo }) => {
     <div className="card-todo bg-white shadow-md rounded-md p-4 mb-4 cursor-pointer">
       <div className='border-b p-5 flex flex-col md:flex-row text-center justify-between'>
         <div className='rounded-lg  border-gray-600'>
-          <strong>ID: {todo.idUser}</strong>
+          <strong>ID: {todo.userId}</strong>
         </div>
         <div>
           <button className='bg-lime-900 w-100 text-white text-lg w-full p-3 uppercase font-bold block text-center rounded-lg cursor-pointer hover:bg-lime-800 transition-colors' onClick={openModal}>
@@ -63,20 +63,39 @@ const CardTodo: React.FC<{ todo: Todo }> = ({ todo }) => {
       </div>
 
       <Modal isOpen={isModalOpen} onRequestClose={closeModal} className="fixed inset-0 flex items-center justify-center">
-        <div className="bg-gray-500 text-white p-8 rounded-md">
-          <button className='text-red-800' onClick={closeModal}>x</button>
-          <h2 className="text-2xl font-bold mb-4">Detalles del TODO</h2>
-          <div><p>ID: {todo.idUser}</p></div>
-          <div><p>Todo: {todo.todo}</p></div>
-          <div><p>Completed: {todo.completed ? 'Yes' : 'No'}</p></div>
+        <div className="modal p-8 rounded-md">
+          <button className='text-green-400' onClick={closeModal}>x</button>
+          <div className='modal-details'>
+              <div className='modal-detail'>
+                  <h3 className="text-2xl font-bold mb-4">Detalles del TODO</h3>
+              </div>
+              <hr/>
+              <div className='modal-detail'>
+                <p>ID: {todo.userId}</p>
+              </div>
+              <hr/>
+              <div className='modal-detail'>
+                <p>Todo: {todo.todo}</p>
+              </div>
+              <hr/>
+              <div className='modal-detail'>
+                  <p>Completed: {todo.completed ? 'Yes' : 'No'}</p>
+              </div>
+          </div>
 
-          <div className="mt-4">
-            <button className="bg-blue-500 text-white px-4 py-2 mr-2 rounded" onClick={handleEdit}>
-              Editar
-            </button>
-            <button className="bg-red-700 text-white px-4 py-2 rounded" onClick={handleDelete}>
-              Eliminar
-            </button>
+          <div  className="div-modal-buttons mt-4">
+            <div>
+              <button className="bg-blue-500 text-white px-4 py-2 mr-2 rounded" onClick={handleEdit}>
+                Editar
+              </button>
+            </div>
+            <div>
+              <button className="bg-red-700 text-white px-4 py-2 rounded" onClick={handleDelete}>
+                Eliminar
+              </button>
+            </div>
+
+
           </div>
         </div>
       </Modal>

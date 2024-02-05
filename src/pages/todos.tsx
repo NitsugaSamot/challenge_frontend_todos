@@ -1,4 +1,4 @@
-import{ useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import CardsTodos from '@/components/cards-todos/cards-todos';
 import firebaseConfig from '../../firebase/config';
 import { initializeFirebase, getAllTodos } from '../../firebase/firebase';
@@ -8,27 +8,29 @@ const db = initializeFirebase(firebaseConfig);
 
 interface Todo {
   id: string;
-  idUser: number;
+  userId: number;
   todo: string;
   completed: boolean;
 }
 
 const Todos = () => {
+  const [todos, setTodos] = useState<Todo[]>([]); // Especifica el tipo como Tarea[]
 
-const [todos, setTodos] = useState<Todo[]>([]); // Especifica el tipo como Tarea[]
-
-useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
       try {
         // Obtener datos de la API externa
         const externalResponse = await fetch('https://dummyjson.com/todos');
         const externalData = await externalResponse.json();
 
+        // Limitar la cantidad de todos de la API externa a 5
+        const limitedExternalTodos = externalData.todos.slice(0, 3);
+
         // Obtener todos de Firebase
         const firebaseData = await getAllTodos(db);
 
         // Combinar ambos conjuntos de datos
-        const combinedTodos = [...externalData.todos, ...firebaseData];
+        const combinedTodos = [...limitedExternalTodos, ...firebaseData];
 
         // Establecer los todos combinados en el estado
         setTodos(combinedTodos);
@@ -42,11 +44,11 @@ useEffect(() => {
 
   return (
     <AppLayout>
-        <div>
-            <CardsTodos  todos={todos}/>
-        </div>
+      <div className='text-lg'>
+        <CardsTodos todos={todos} />
+      </div>
     </AppLayout>
-  )
-}
+  );
+};
 
-export default Todos
+export default Todos;

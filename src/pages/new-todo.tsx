@@ -33,11 +33,11 @@ const NewTodo = () => {
 
   const formik = useFormik({
     initialValues: {
-      idUser: null as number | null,
+      userId: null as number | null,
       todo: '',
     },
     validationSchema: Yup.object({
-      idUser: Yup.number().required('El campo ID no puede ir vacío ni debe tener carácteres especiales, debe ser un Número'),
+      userId: Yup.number().required('El campo ID no puede ir vacío ni debe tener carácteres especiales, debe ser un Número'),
       todo: Yup.string().required('Debes asignar una actividad en TODOs para completar el Formulario'),
     }),
 
@@ -50,7 +50,7 @@ const NewTodo = () => {
 
         } else {
           // Si no está editando, agregar un nuevo todo
-          await addTodoToFirestore(values.idUser as number, values.todo)
+          await addTodoToFirestore(values.userId as number, values.todo)
             
         }
       } catch (error) {
@@ -65,7 +65,7 @@ const NewTodo = () => {
     const { query } = router;
     if (query.id && query.userId) {
       formik.setValues({
-        idUser: Number(query.userId),
+        userId: Number(query.userId),
         todo: Array.isArray(query.todo) ? query.todo[0] : query.todo?.toString() || '',
       });
       setIsEditing(true);
@@ -120,7 +120,7 @@ const NewTodo = () => {
     }
   };
   
-  const addTodoToFirestore = async (idUser: number, todo: string) => {
+  const addTodoToFirestore = async (userId: number, todo: string) => {
     try {
       const existingTodos = await checkDocDuplicate(todo);
   
@@ -135,7 +135,7 @@ const NewTodo = () => {
       }
   
       const docRef = await addDoc(collection(db, 'todos'), {
-        idUser,
+        userId,
         todo,
         completed: false,
       });
@@ -158,7 +158,7 @@ const NewTodo = () => {
 
   return (
     <AppLayout>
-      <form onSubmit={formik.handleSubmit} className="bg-white py-10 px-5 md:w-1/2 rounded-lg shadow mt-5 ">
+      <form onSubmit={formik.handleSubmit} className="bg-white py-10 px-5 md:w-1/1 rounded-lg shadow ">
 
       {errorAlert && <ErrorAlert msg={errorAlert} />}
         {successAlert && <SuccessAlert msg={successAlert} />}
@@ -167,11 +167,11 @@ const NewTodo = () => {
           type="number"
           className="border w-full p-2 mt-2 placeholder-gray-400 rounded-md"
           placeholder="Id del usuario"
-          {...formik.getFieldProps('idUser')}
+          {...formik.getFieldProps('userId')}
         />
-        {formik.touched.idUser && formik.errors.idUser && (
+        {formik.touched.userId && formik.errors.userId && (
           <div className="border-red-500 p-3 text-red-700 text-lg mt-1">
-            {formik.touched.idUser && formik.errors.idUser && <div>{formik.errors.idUser}</div>}
+            {formik.touched.userId && formik.errors.userId && <div>{formik.errors.userId}</div>}
           </div>
         )}
 
@@ -182,7 +182,7 @@ const NewTodo = () => {
         />
         {formik.touched.todo && formik.errors.todo && (
           <div className="border-red-500 p-3 text-red-700 text-lg mt-1">
-            {formik.touched.idUser && formik.errors.todo && <div>{formik.errors.todo}</div>}
+            {formik.touched.userId && formik.errors.todo && <div>{formik.errors.todo}</div>}
           </div>
         )}
 
