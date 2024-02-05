@@ -20,7 +20,7 @@ interface ErrorAlert {
     msg: string;
 }
   
-interface SuccesAlert {
+interface SuccessAlert {
     msg: string;
 }
   
