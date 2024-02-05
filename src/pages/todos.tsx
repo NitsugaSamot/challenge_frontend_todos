@@ -6,6 +6,7 @@ import AppLayout from './app-layout';
 
 const db = initializeFirebase(firebaseConfig);
 
+/* Interfaz de Todo */
 interface Todo {
   id: string;
   userId: number;
@@ -23,8 +24,8 @@ const Todos = () => {
         const externalResponse = await fetch('https://dummyjson.com/todos');
         const externalData = await externalResponse.json();
 
-        // Limitar la cantidad de todos de la API externa a 5
-        const limitedExternalTodos = externalData.todos.slice(0, 3);
+        // Limitar la cantidad de todos de la API externa 
+        const limitedExternalTodos = externalData.todos.slice(0, 2);
 
         // Obtener todos de Firebase
         const firebaseData = await getAllTodos(db);

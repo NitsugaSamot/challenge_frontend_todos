@@ -18,7 +18,7 @@ const Footer = () => {
                 <nav className="navegacion">
                     <div className="copyright">
                        <p>
-                       Todos los derechos reservados 2024 &copy;
+                            Todos los derechos reservados 2024 &copy;
                        </p>
                     </div>
                        

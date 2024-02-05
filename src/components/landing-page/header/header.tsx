@@ -1,13 +1,13 @@
-import React from 'react';
 import Image from '../../../../node_modules/next/image';
 import { useRouter } from 'next/router';
+import Link from '../../../../node_modules/next/link';
 
 const Header = () => {
   const router = useRouter();
 
   const handleRedirect = () => {
 
-    router.push('/app-layout');
+    router.push('/todos');
   };
 
   return (
@@ -24,20 +24,16 @@ const Header = () => {
               />
             </div>
 
-            <div>
-              {/* Contenido opcional */}
-            </div>
-
             <nav className="navegacion">
-              <button className='navegacion__link'>
-                <a href="#somos" className="">Somos</a>
-              </button>
-              <button className='navegacion__link'>                          
-                <a href="#" className="">¿Cómo Funciona?</a>
-              </button>
-              <button className='navegacion__link'>   
-                <a href="#" className="">Regístrate</a>
-              </button>                       
+            <Link href="#somos">
+                <button className="navegacion__link">Somos</button>
+              </Link>
+              <Link href="#main">
+                <button className="navegacion__link">¿Cómo Funciona?</button>
+              </Link>
+              {/* <Link href="#">
+                <button className="navegacion__link">Regístrate</button>
+              </Link> */}
             </nav>
           </div>
 

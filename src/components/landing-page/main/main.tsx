@@ -2,7 +2,7 @@ import Image from "../../../../node_modules/next/image"
 
 const Main = () => {
   return (
-    <main className="info">
+    <main id="main" className="info">
     <h3 className="info__heading">¿Cómo Funciona?</h3>
     <div className="info__contenedor">
       <div className="info__grid">

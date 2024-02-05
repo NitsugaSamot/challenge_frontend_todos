@@ -8,9 +8,11 @@ import { initializeFirebase } from '../../firebase/firebase';
 import firebaseConfig from '../../firebase/config';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import Footer from '@/components/landing-page/footer/footer';
 
 const db = initializeFirebase(firebaseConfig);
 
+/* Definición de interfaces */
 interface TodoDocument {
     id: string;
     todo: string;
@@ -31,6 +33,7 @@ const NewTodo = () => {
 
   const router = useRouter();
 
+  /* Formik para el manejo de errores en el form */
   const formik = useFormik({
     initialValues: {
       userId: null as number | null,
@@ -45,11 +48,11 @@ const NewTodo = () => {
 
       try {
         if (isEditing) {
-          // Si está editando, enviar la edición
+          // Si está editando, envia la edición
           await updateTodoInFirestore(router.query.id as string, values.todo);
 
         } else {
-          // Si no está editando, agregar un nuevo todo
+          // Si no está editando, agrega un nuevo todo
           await addTodoToFirestore(values.userId as number, values.todo)
             
         }
@@ -128,7 +131,7 @@ const NewTodo = () => {
         setErrorAlert('El TODO que intentas ingresar ya está registrado');
 
         setTimeout(() => {
-            setErrorAlert(''); // Reiniciar la alerta después de un tiempo
+            setErrorAlert(''); 
           }, 2000);
     
         throw new Error('El TODO que intentas ingresar ya está registrado');
@@ -144,7 +147,7 @@ const NewTodo = () => {
       formik.resetForm();
       setIsEditing(false);
 
-      setSuccessAlert('El TODO fue editado con Éxito!!');
+      setSuccessAlert('El TODO fue agregado con Éxito!!');
 
       setTimeout(() => {
         setSuccessAlert('');
@@ -158,7 +161,11 @@ const NewTodo = () => {
 
   return (
     <AppLayout>
-      <form onSubmit={formik.handleSubmit} className="bg-white py-10 px-5 md:w-1/1 rounded-lg shadow ">
+      <form 
+        onSubmit={formik.handleSubmit} 
+        className="form-todo bg-white py-10 px-5 rounded-lg shadow mx-auto" 
+        style={{ maxWidth: "600px" }} 
+      >
 
       {errorAlert && <ErrorAlert msg={errorAlert} />}
         {successAlert && <SuccessAlert msg={successAlert} />}
@@ -192,7 +199,9 @@ const NewTodo = () => {
           value={isEditing ? 'Actualizar' : 'Enviar'}
         />
       </form>
+      
     </AppLayout>
+    
   );
 };
 
