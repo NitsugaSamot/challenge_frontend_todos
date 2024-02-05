@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import Header from '@/components/header/header';
 import Aside from '@/components/aside/aside'
+import Footer from '@/components/landing-page/footer/footer'
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -19,6 +20,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
             {children}
           </main>
         </div>
+        <Footer/>
       </div>
     </>
   );

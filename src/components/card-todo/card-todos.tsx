@@ -39,7 +39,7 @@ const CardTodo: React.FC<{ todo: Todo }> = ({ todo }) => {
 
   const handleDelete = () => {
     if (window.confirm('¿Estás seguro de que deseas eliminar este TODO?')) {
-      deleteTodoFromFirestore(todo.id); // Asegúrate de que todo.id sea el ID correcto
+      deleteTodoFromFirestore(todo.id); 
       router.push(`/app-layout`);
     }
   };
@@ -53,10 +53,13 @@ const CardTodo: React.FC<{ todo: Todo }> = ({ todo }) => {
     <div className="card-todo bg-white shadow-md rounded-md p-4 mb-4 cursor-pointer">
       <div className='border-b p-5 flex flex-col md:flex-row text-center justify-between'>
         <div className='rounded-lg  border-gray-600'>
-          <strong>ID: {todo.userId}</strong>
+          <strong >ID: {todo.userId}</strong>
         </div>
         <div>
-          <button className='bg-lime-900 w-100 text-white text-lg w-full p-3 uppercase font-bold block text-center rounded-lg cursor-pointer hover:bg-lime-800 transition-colors' onClick={openModal}>
+          <button 
+              className='bg-lime-900 w-100 text-white text-lg w-full p-3 uppercase font-bold block text-center rounded-lg cursor-pointer hover:bg-lime-800 transition-colors' 
+              onClick={openModal}
+          >
             Ver
           </button>
         </div>
