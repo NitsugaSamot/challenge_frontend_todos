@@ -1,10 +1,8 @@
 import React from 'react';
 
 interface AlertProps {
-  alert: {
     msg: string;
     error: boolean;
-  };
 }
 
 const Alert: React.FC<AlertProps> = ({ alert }) => {

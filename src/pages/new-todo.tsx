@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AppLayout from './app-layout';
-import Alert from '@/components/alert/alert';
+import ErrorAlert from '@/components/alert/alert-error';
+import SuccessAlert from '@/components/alert/alert-success';
 import { useRouter } from 'next/router';
 import { doc, collection, addDoc, updateDoc, getDocs, query, where  } from 'firebase/firestore';
 import { initializeFirebase } from '../../firebase/firebase';
@@ -15,15 +16,18 @@ interface TodoDocument {
     todo: string;
   }
 
-interface Alert {
+interface ErrorAlert {
     msg: string;
-    error: boolean;
-  }
+}
+  
+interface SuccesAlert {
+    msg: string;
+}
   
 const NewTodo = () => {
   const [isEditing, setIsEditing] = useState(false);
-//   const [ alert, setAlert ] = useState({})
-const [alert, setAlert] = useState<any>({});
+  const [errorAlert, setErrorAlert] = useState<string>('');
+  const [successAlert, setSuccessAlert] = useState<string>('');
 
   const router = useRouter();
 
@@ -43,17 +47,11 @@ const [alert, setAlert] = useState<any>({});
         if (isEditing) {
           // Si está editando, enviar la edición
           await updateTodoInFirestore(router.query.id as string, values.todo);
-          setAlert({
-            msg: 'El TODO fue editado con Éxito!!',
-            error: false
-            })
+
         } else {
           // Si no está editando, agregar un nuevo todo
-          await addTodoToFirestore(values.idUser as number, values.todo);
-          setAlert({
-            msg: 'El TODO fue ingresado con Éxito!!',
-            error: false
-            })
+          await addTodoToFirestore(values.idUser as number, values.todo)
+            
         }
       } catch (error) {
         console.error('Error al agregar/actualizar documento:', error);
@@ -61,6 +59,7 @@ const [alert, setAlert] = useState<any>({});
     },
 
   });
+
 
   useEffect(() => {
     const { query } = router;
@@ -93,10 +92,12 @@ const [alert, setAlert] = useState<any>({});
       const existingTodos = await checkDocDuplicate(todo);
   
       if (existingTodos.length > 0) {
-        setAlert({
-            msg: 'El TODO que intentas ingresar ya está registrado',
-            error: true
-        })
+        setErrorAlert('El TODO que intentas ingresar ya está registrado');
+
+        setTimeout(() => {
+            setErrorAlert(''); // Reiniciar la alerta después de un tiempo
+          }, 2000);
+    
         throw new Error('El TODO que intentas ingresar ya está registrado');
 
       }
@@ -107,9 +108,13 @@ const [alert, setAlert] = useState<any>({});
       formik.resetForm();
       setIsEditing(false);
 
+      setSuccessAlert('El TODO fue editado con Éxito!!');
+
       setTimeout(() => {
+        setSuccessAlert('');
         router.push(`/todos`);
       }, 2000);
+
     } catch (error) {
       console.error('Error al actualizar documento:', error);
     }
@@ -120,10 +125,12 @@ const [alert, setAlert] = useState<any>({});
       const existingTodos = await checkDocDuplicate(todo);
   
       if (existingTodos.length > 0) {
-        setAlert({
-          msg: 'El TODO que intentas ingresar ya está registrado',
-          error: true,
-        });
+        setErrorAlert('El TODO que intentas ingresar ya está registrado');
+
+        setTimeout(() => {
+            setErrorAlert(''); // Reiniciar la alerta después de un tiempo
+          }, 2000);
+    
         throw new Error('El TODO que intentas ingresar ya está registrado');
       }
   
@@ -136,8 +143,11 @@ const [alert, setAlert] = useState<any>({});
   
       formik.resetForm();
       setIsEditing(false);
-  
+
+      setSuccessAlert('El TODO fue editado con Éxito!!');
+
       setTimeout(() => {
+        setSuccessAlert('');
         router.push(`/todos`);
       }, 2000);
     } catch (error) {
@@ -145,13 +155,13 @@ const [alert, setAlert] = useState<any>({});
     }
   };
   
-  const { msg } = alert
-  
+
   return (
     <AppLayout>
       <form onSubmit={formik.handleSubmit} className="bg-white py-10 px-5 md:w-1/2 rounded-lg shadow mt-5 ">
 
-        { msg && <Alert alert={alert} /> }
+      {errorAlert && <ErrorAlert msg={errorAlert} />}
+        {successAlert && <SuccessAlert msg={successAlert} />}
 
         <input
           type="number"
