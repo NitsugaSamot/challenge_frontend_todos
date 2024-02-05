@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AppLayout from './app-layout';
+import Alert from '@/components/alert/alert';
 import { useRouter } from 'next/router';
 import { doc, collection, addDoc, updateDoc, getDocs, query, where  } from 'firebase/firestore';
 import { initializeFirebase } from '../../firebase/firebase';
@@ -12,12 +13,17 @@ const db = initializeFirebase(firebaseConfig);
 interface TodoDocument {
     id: string;
     todo: string;
-    // Otros campos de la colección 'todos'
+  }
+
+interface Alert {
+    msg: string;
+    error: boolean;
   }
   
-
 const NewTodo = () => {
   const [isEditing, setIsEditing] = useState(false);
+//   const [ alert, setAlert ] = useState({})
+const [alert, setAlert] = useState<any>({});
 
   const router = useRouter();
 
@@ -37,9 +43,17 @@ const NewTodo = () => {
         if (isEditing) {
           // Si está editando, enviar la edición
           await updateTodoInFirestore(router.query.id as string, values.todo);
+          setAlert({
+            msg: 'El TODO fue editado con Éxito!!',
+            error: false
+            })
         } else {
           // Si no está editando, agregar un nuevo todo
           await addTodoToFirestore(values.idUser as number, values.todo);
+          setAlert({
+            msg: 'El TODO fue ingresado con Éxito!!',
+            error: false
+            })
         }
       } catch (error) {
         console.error('Error al agregar/actualizar documento:', error);
@@ -79,7 +93,12 @@ const NewTodo = () => {
       const existingTodos = await checkDocDuplicate(todo);
   
       if (existingTodos.length > 0) {
-        throw new Error('Ya existe un TODO con la misma descripción para cualquier usuario.');
+        setAlert({
+            msg: 'El TODO que intentas ingresar ya está registrado',
+            error: true
+        })
+        throw new Error('El TODO que intentas ingresar ya está registrado');
+
       }
   
       const todoDocRef = doc(db, 'todos', id);
@@ -87,7 +106,10 @@ const NewTodo = () => {
       console.log('Documento actualizado:', id);
       formik.resetForm();
       setIsEditing(false);
-      router.push(`/todos`);
+
+      setTimeout(() => {
+        router.push(`/todos`);
+      }, 2000);
     } catch (error) {
       console.error('Error al actualizar documento:', error);
     }
@@ -98,24 +120,39 @@ const NewTodo = () => {
       const existingTodos = await checkDocDuplicate(todo);
   
       if (existingTodos.length > 0) {
-        throw new Error('Ya existe un TODO con la misma descripción para cualquier usuario.');
+        setAlert({
+          msg: 'El TODO que intentas ingresar ya está registrado',
+          error: true,
+        });
+        throw new Error('El TODO que intentas ingresar ya está registrado');
       }
   
-      const docRef = await addDoc(collection(db, 'todos'), { idUser, todo, completed: false });
+      const docRef = await addDoc(collection(db, 'todos'), {
+        idUser,
+        todo,
+        completed: false,
+      });
       console.log('Documento agregado con ID:', docRef.id);
+  
       formik.resetForm();
       setIsEditing(false);
-      router.push(`/todos`);
+  
+      setTimeout(() => {
+        router.push(`/todos`);
+      }, 2000);
     } catch (error) {
       console.error('Error al agregar documento:', error);
-
     }
   };
   
+  const { msg } = alert
   
   return (
     <AppLayout>
       <form onSubmit={formik.handleSubmit} className="bg-white py-10 px-5 md:w-1/2 rounded-lg shadow mt-5 ">
+
+        { msg && <Alert alert={alert} /> }
+
         <input
           type="number"
           className="border w-full p-2 mt-2 placeholder-gray-400 rounded-md"
