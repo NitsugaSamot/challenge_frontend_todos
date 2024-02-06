@@ -5,6 +5,15 @@ import Link from '../../../../node_modules/next/link';
 const Header = () => {
   const router = useRouter();
 
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+  
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+  
+
   const handleRedirect = () => {
 
     router.push('/todos');
@@ -25,12 +34,18 @@ const Header = () => {
             </div>
 
             <nav className="navegacion">
-            <Link href="#somos">
-                <button className="navegacion__link">Somos</button>
-              </Link>
-              <Link href="#main">
-                <button className="navegacion__link">¿Cómo Funciona?</button>
-              </Link>
+                <Link href="#somos">
+                    <div className="navegacion__link" onClick={() => scrollToSection('somos')}>
+                      Somos
+                    </div>
+                </Link>
+
+                <Link href="#main">
+                  <div className="navegacion__link" onClick={() => scrollToSection('main')}>
+                    ¿Cómo Funciona?
+                  </div>
+                </Link>
+
               {/* <Link href="#">
                 <button className="navegacion__link">Regístrate</button>
               </Link> */}
